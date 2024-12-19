@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Match {
+  id         Int      @id @default(autoincrement())
+  team1      String
+  team2      String
+  team1Odds  Float
+  drawOdds   Float
+  team2Odds  Float
+  team1Logo  String?
+  team2Logo  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  @@map("matches")
+}
+
+model User {
+  id               String   @id @default(uuid())
+  username         String   @unique
+  email            String   @unique
+  password         String
+  phoneNumber      String   @unique
+  isVerified       Boolean  @default(false)
+  verificationCode String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("users")
+}
